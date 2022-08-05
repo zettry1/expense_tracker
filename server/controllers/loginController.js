@@ -14,7 +14,7 @@ async function login(req, res, next) {
         }, `SECRET`);
         res.status(200).json({ token })
     }
-    next({ error: `user does not exist` });
+    next({ error: `User does not exist` });
 }
 
 
