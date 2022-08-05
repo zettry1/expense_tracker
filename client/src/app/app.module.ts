@@ -13,11 +13,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { bookReducer } from './state/bookState/books.reducer';
 import { collectionReducer } from './state/bookState/collections.reducer';
 import { BookListComponent } from './component/book-list/book-list.component';
-
+import { MatSliderModule } from '@angular/material/slider';
 @NgModule({
   declarations: [AppComponent, LoginComponent, BookListComponent],
   imports: [
     BrowserModule,
+    MatSliderModule,
     HttpClientModule,
     ReactiveFormsModule,
     RouterModule.forRoot([

@@ -16,6 +16,7 @@ import { retrieveBookList, addBook } from './state/bookState/books.actions';
     <h1>Todos App</h1>
 
     <router-outlet></router-outlet>
+    <mat-slider min="1" max="100" step="1" value="50"></mat-slider>
 
     <h2>Books</h2>
     <app-book-list
