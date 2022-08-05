@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UserService } from './user.service';
+import { UserService } from '../../service/user.service';
 
 @Component({
   selector: 'app-login',
@@ -9,10 +9,10 @@ import { UserService } from './user.service';
     <p>
       login works!
     </p>
-    
+
     <form [formGroup]="loginForm" (ngSubmit)="login()">
-    <input placeholder="email" formControlName="email"/>  
-    <input placeholder="password" formControlName="password"/>  
+    <input placeholder="email" formControlName="email"/>
+    <input placeholder="password" formControlName="password"/>
     <button type="submit">Login</button>
   </form>
   `,

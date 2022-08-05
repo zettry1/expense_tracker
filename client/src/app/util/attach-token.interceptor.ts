@@ -3,21 +3,27 @@ import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
-  HttpInterceptor
+  HttpInterceptor,
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { UserService } from './user.service';
+import { UserService } from '../service/user.service';
 
 @Injectable()
 export class AttachTokenInterceptor implements HttpInterceptor {
+  constructor(private userService: UserService) {}
 
-  constructor(private userService: UserService) { }
-
-  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
+  intercept(
+    request: HttpRequest<unknown>,
+    next: HttpHandler
+  ): Observable<HttpEvent<unknown>> {
     if (!this.userService.getUserState()) {
       return next.handle(request);
     } else {
-      const clone = request.clone({ setHeaders: { Authorization: `Bearer ${this.userService.userState$.value.token}` } });
+      const clone = request.clone({
+        setHeaders: {
+          Authorization: `Bearer ${this.userService.userState$.value.token}`,
+        },
+      });
       return next.handle(clone);
     }
   }

@@ -14,11 +14,19 @@ import { bookReducer } from './state/bookState/books.reducer';
 import { collectionReducer } from './state/bookState/collections.reducer';
 import { BookListComponent } from './component/book-list/book-list.component';
 import { MatSliderModule } from '@angular/material/slider';
+import { MatListModule } from '@angular/material/list';
+import { ExpenseListComponent } from './component/expenst-list/expense-list.component';
 @NgModule({
-  declarations: [AppComponent, LoginComponent, BookListComponent],
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    BookListComponent,
+    ExpenseListComponent,
+  ],
   imports: [
     BrowserModule,
     MatSliderModule,
+    MatListModule,
     HttpClientModule,
     ReactiveFormsModule,
     RouterModule.forRoot([

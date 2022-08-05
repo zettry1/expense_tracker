@@ -1,13 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Todo } from './TodoInterface';
+import { Todo } from '../../interface/TodoInterface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TodosService {
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getTodos() {
     return this.http.get<Array<Todo>>('http://localhost:3000/todos');
@@ -22,7 +21,10 @@ export class TodosService {
   }
 
   toggleTodoById(todo_id: string, completed: boolean) {
-    return this.http.patch('http://localhost:3000/todos/' + todo_id + '?completed=' + completed, {});
+    return this.http.patch(
+      'http://localhost:3000/todos/' + todo_id + '?completed=' + completed,
+      {}
+    );
   }
 
   addNewTodo(todo: Todo) {
@@ -31,7 +33,5 @@ export class TodosService {
 
   updateTodo(todo: Todo) {
     return this.http.put('http://localhost:3000/todos/' + todo._id, todo);
-
   }
-
 }
