@@ -8,7 +8,7 @@ const expenseRouter = require('./routers/expenseRouter');
 const categoryRouter = require('./routers/categoryRouter')
 
 const app = express();
-mongoose.connect('mongodb://localhost:27017/todo', { useNewUrlParser: true });
+mongoose.connect('mongodb://localhost:27017/FinalProject', { useNewUrlParser: true });
 
 app.use(morgan('dev'));
 app.use(cors());
