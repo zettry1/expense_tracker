@@ -50,7 +50,7 @@ export class AppComponent implements OnDestroy {
     const userState = this.userService.getUserState();
 
     if (userState?.user_id) {
-      this.router.navigate(['/', 'todos']);
+      this.router.navigate(['/', 'expense']);
     } else {
       this.router.navigate(['/', 'login']);
     }

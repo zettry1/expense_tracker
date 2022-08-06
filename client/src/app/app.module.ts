@@ -17,12 +17,7 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatListModule } from '@angular/material/list';
 import { ExpenseListComponent } from './component/expenst-list/expense-list.component';
 @NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent,
-    BookListComponent,
-    ExpenseListComponent,
-  ],
+  declarations: [AppComponent, LoginComponent, BookListComponent],
   imports: [
     BrowserModule,
     MatSliderModule,
@@ -33,10 +28,10 @@ import { ExpenseListComponent } from './component/expenst-list/expense-list.comp
       { path: '', redirectTo: 'login', pathMatch: 'full' },
       { path: 'login', component: LoginComponent },
       {
-        path: 'todos',
+        path: 'expense',
         loadChildren: () =>
-          import('./component/todos/todos.module').then(
-            (module) => module.TodosModule
+          import('./component/expenst-list/expense-list.component').then(
+            (module) => module.ExpenseListComponent
           ),
         canActivate: [CheckTokenGuard],
       },
