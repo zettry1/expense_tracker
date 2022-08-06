@@ -27,7 +27,10 @@ import { ExpenseService } from 'src/app/service/expense.service';
 })
 export class ExpenseListComponent {
   list_of_expenses: Array<Expense> = [];
-
+  messages: any[] = [
+    { from: 'aa', content: 'cont', subject: 'subj' },
+    { from: 'aa', content: 'cont', subject: 'subj' },
+  ];
   constructor(private expenseService: ExpenseService, private router: Router) {
     this.expenseService.getExpenses().subscribe((response: Array<Expense>) => {
       this.list_of_expenses = response;
