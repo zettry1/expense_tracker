@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'expense-date-selection',
@@ -10,11 +10,15 @@ import { Component, OnInit } from '@angular/core';
   </div>`,
   styleUrls: ['./date-selection.component.scss'],
 })
-export class DateSelectionComponent implements OnInit {
+export class DateSelectionComponent implements OnInit, OnChanges {
   selected: Date;
 
   constructor() {
     this.selected = new Date();
+  }
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log(changes);
+    console.log(this.selected);
   }
 
   ngOnInit(): void {}
