@@ -1,25 +1,21 @@
 import { Component, OnDestroy } from '@angular/core';
+import { UserService } from '../user.service';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { UserService } from './user.service';
 
 @Component({
-  selector: 'app-root',
-  template: `
-  <div *ngIf="isLoggedIn">
-    <button (click)="logout()" >Logout</button>
-    <p>welcome {{username}}</p>
-  </div>
-    <router-outlet></router-outlet>
-
-  `,
+  selector: 'app-home',
+  templateUrl: './home.component.html',
+  styleUrls: ['./home.component.css']
 })
-export class AppComponent implements OnDestroy {
+export class HomeComponent implements OnDestroy {
   isLoggedIn: boolean = false;
   sub!: Subscription;
-  username: string = ''
+  username: string = '';
+  title: string = ''
   constructor(private userService: UserService, private router: Router) {
     this.sub = this.userService.userState$.subscribe(userState => {
+      this.title = 'Expense Tracker App'
       if (userState.token) {
         this.isLoggedIn = true;
         this.username = this.userService.getUserState()?.fullname as string;
@@ -44,7 +40,7 @@ export class AppComponent implements OnDestroy {
 
   logout(): void {
     this.userService.logout();
-    this.router.navigate(['/', 'login']);
+    this.router.navigate(['/', 'home']);
   }
 
 }
