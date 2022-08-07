@@ -10,18 +10,33 @@ import { CheckTokenGuard } from './util/check-token.guard';
 import { AttachTokenInterceptor } from './util/attach-token.interceptor';
 import { StoreModule } from '@ngrx/store';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { bookReducer } from './state/bookState/books.reducer';
-import { collectionReducer } from './state/bookState/collections.reducer';
-import { BookListComponent } from './component/book-list/book-list.component';
+
 import { MatSliderModule } from '@angular/material/slider';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatListModule } from '@angular/material/list';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+
+import { MatCardModule } from '@angular/material/card';
 import { ExpenseListComponent } from './component/expenst-list/expense-list.component';
+import { DateSelectionComponent } from './date-selection/date-selection.component';
+import { MatNativeDateModule } from '@angular/material/core';
 @NgModule({
-  declarations: [AppComponent, LoginComponent, BookListComponent],
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    ExpenseListComponent,
+    DateSelectionComponent,
+  ],
   imports: [
     BrowserModule,
     MatSliderModule,
     MatListModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatNativeDateModule,
+    MatCardModule,
+    MatDatepickerModule,
     HttpClientModule,
     ReactiveFormsModule,
     RouterModule.forRoot([
@@ -29,18 +44,16 @@ import { ExpenseListComponent } from './component/expenst-list/expense-list.comp
       { path: 'login', component: LoginComponent },
       {
         path: 'expense',
-        loadChildren: () =>
-          import('./component/expenst-list/expense-list.component').then(
-            (module) => module.ExpenseListComponent
-          ),
+        // loadChildren: () =>
+        //   import('./component/expenst-list/expense-list.component').then(
+        //     (module) => module.ExpenseListComponent
+        //   ),
+        component: ExpenseListComponent,
         canActivate: [CheckTokenGuard],
       },
       { path: '**', redirectTo: 'login' },
     ]),
-    StoreModule.forRoot(
-      { books: bookReducer, collection: collectionReducer },
-      {}
-    ),
+    StoreModule.forRoot({}, {}),
     BrowserAnimationsModule,
   ],
   providers: [

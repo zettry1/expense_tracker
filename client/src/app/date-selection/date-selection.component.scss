@@ -1,0 +1,12 @@
+.calendar-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  margin: 1rem;
+}
+.calendar-card {
+  width: 20%;
+  max-width: 50%;
+  text-align: center;
+}
