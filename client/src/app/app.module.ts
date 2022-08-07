@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
 
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './component/login/login.component';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 // angular material
@@ -64,7 +64,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
         component: ExpenseListComponent,
         canActivate: [CheckTokenGuard],
       },
-      // { path: '**', redirectTo: 'login' }
+      { path: '**', redirectTo: 'login' },
     ]),
 
     AppRoutingModule,

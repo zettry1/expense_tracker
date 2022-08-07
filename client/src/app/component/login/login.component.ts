@@ -1,20 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from '../../service/user.service';
 
 @Component({
   selector: 'app-login',
-  template: `
-    <p>login works!</p>
-
-    <form [formGroup]="loginForm" (ngSubmit)="login()">
-      <input placeholder="email" formControlName="email" />
-      <input placeholder="password" formControlName="password" />
-      <button type="submit">Login</button>
-    </form>
-  `,
-  styles: [],
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css'],
 })
 export class LoginComponent {
   loginForm!: FormGroup;
@@ -36,8 +28,7 @@ export class LoginComponent {
         // set the state
         this.userService.userState$.next(response);
         this.userService.persistState();
-        this.router.navigate(['/', 'expense']);
-        // console.log(this.userService.getUserState())
+        this.router.navigate(['/', 'todos']);
       });
   }
 }
