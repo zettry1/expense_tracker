@@ -12,7 +12,6 @@ import { UserService } from './service/user.service';
       <button (click)="logout()">Logout</button>
       <p>welcome {{ username }}</p>
     </div>
-
     <router-outlet></router-outlet>
   `,
 })
@@ -41,7 +40,7 @@ export class AppComponent implements OnDestroy {
     if (userState?.user_id) {
       this.router.navigate(['/', 'expense']);
     } else {
-      this.router.navigate(['/', 'login']);
+      this.router.navigate(['/', 'home']);
     }
   }
 
