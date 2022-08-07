@@ -33,6 +33,8 @@ import { CheckTokenGuard } from './util/check-token.guard';
 import { AttachTokenInterceptor } from './util/attach-token.interceptor';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AddExpenseComponent } from './component/add-expense/add-expense.component';
+import { EditExpenseComponent } from './component/edit-expense/edit-expense.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -40,6 +42,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
     ExpenseListComponent,
     DateSelectionComponent,
+    AddExpenseComponent,
+    EditExpenseComponent,
   ],
   imports: [
     BrowserModule,

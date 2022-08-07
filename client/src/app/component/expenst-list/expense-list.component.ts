@@ -71,6 +71,7 @@ export class ExpenseListComponent {
       this.dataSource.paginator = this.paginator;
     });
   }
+
   deleteTodo(todo_id: string) {
     this.expenseService.deleteExpenseById(todo_id).subscribe((response) => {
       this.list_of_expenses = this.list_of_expenses.filter(
