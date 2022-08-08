@@ -16,7 +16,7 @@ app.use(morgan("dev"));
 app.use(cors());
 app.use(express.json());
 
-app.use("/expense", expenseRouter);
+app.use("/expense", checkToken, expenseRouter);
 app.use("/categories", checkToken, categoryRouter);
 app.use("/users", require("./routers/userRouter"));
 

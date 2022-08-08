@@ -86,7 +86,6 @@ import { Router } from '@angular/router';
           </button>
         </div>
       </form>
-      <div>{{ form.value | json }}</div>
     </mat-card>
   `,
 
@@ -125,6 +124,5 @@ export class AddExpenseComponent implements OnInit {
       .subscribe((response) => {
         this.router.navigate(['/', 'expense']);
       });
-    // alert('SUCCESS!! :-)\n\n' + JSON.stringify(form.value, null, 4));
   }
 }

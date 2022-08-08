@@ -8,6 +8,15 @@ import { MatTableDataSource } from '@angular/material/table';
 @Component({
   selector: 'expense-list-todos',
   template: `
+    <div class="expense-summary">
+      <mat-card color="primary"> Income: $ {{ income_amount }} </mat-card>
+      <mat-card class="expense-amount">
+        Expense: $ {{ expense_amount }}
+      </mat-card>
+      <mat-card class="balance-amount">
+        Balance: $ {{ income_amount - expense_amount }}
+      </mat-card>
+    </div>
     <expense-date-selection></expense-date-selection>
     <div class="mat-elevation-z8">
       <table mat-table [dataSource]="list_of_expenses">
@@ -17,7 +26,11 @@ import { MatTableDataSource } from '@angular/material/table';
         </ng-container>
         <ng-container matColumnDef="type">
           <th mat-header-cell *matHeaderCellDef>Type</th>
-          <td mat-cell *matCellDef="let element">{{ element.type }}</td>
+          <td mat-cell *matCellDef="let element">
+            <mat-card [ngClass]="['cell-expense', 'cell-income']">{{
+              element.type
+            }}</mat-card>
+          </td>
         </ng-container>
 
         <ng-container matColumnDef="description">
@@ -55,6 +68,8 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class ExpenseListComponent {
   list_of_expenses: Array<Expense> = [];
+  income_amount: number = 0.0;
+  expense_amount: number = 0.0;
   displayedColumns: string[] = ['name', 'type', 'description', 'total', 'date'];
   dataSource = new MatTableDataSource<Expense>(this.list_of_expenses);
 
@@ -63,6 +78,14 @@ export class ExpenseListComponent {
   constructor(private expenseService: ExpenseService, private router: Router) {
     this.expenseService.getExpenses().subscribe((response: Array<Expense>) => {
       this.list_of_expenses = response;
+      response.map((e: Expense) => {
+        if (e.type === 'income') {
+          this.income_amount += e.total;
+        } else {
+          this.expense_amount += e.total;
+        }
+      });
+
       this.dataSource.paginator = this.paginator;
     });
   }

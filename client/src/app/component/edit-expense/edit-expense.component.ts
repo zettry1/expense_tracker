@@ -94,7 +94,6 @@ import Expense from 'src/app/interface/expense.model';
           </button>
         </div>
       </form>
-      <div>{{ form.value | json }}</div>
     </mat-card>
   `,
   styleUrls: ['./edit-expense.component.scss'],

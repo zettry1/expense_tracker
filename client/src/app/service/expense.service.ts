@@ -1,15 +1,19 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import Expense from '../interface/expense.model';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ExpenseService {
-  constructor(private http: HttpClient) {}
-
+  constructor(private http: HttpClient, private userService: UserService) {}
   getExpenses() {
-    return this.http.get<Array<any>>('http://localhost:3000/expense');
+    return this.http.get<Array<Expense>>('http://localhost:3000/expense', {
+      params: {
+        user_id: this.userService.getUserState()?.user_id!,
+      },
+    });
   }
 
   getExpenseById(expense_id: string) {

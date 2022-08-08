@@ -13,13 +13,14 @@ async function addExpense(req, res, next) {
 
 async function getExpenses(req, res, next) {
   try {
-    const results = await Expense
-      .find
-      //   { "user.user_id": req.user.user_id },
+    console.log("req.user.user_id", req.user.user_id);
+    const results = await Expense.find(
       //   { description: 0 }
-      ();
+      { "user.user_id": req.user.user_id }
+    );
     res.json(results);
   } catch (error) {
+    console.log("error", error);
     next(error);
   }
 }
