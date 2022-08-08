@@ -8,7 +8,7 @@ import Expense from 'src/app/interface/expense.model';
 @Component({
   selector: 'app-edit-expense',
   template: `
-    <div class="container">
+    <mat-card class="container">
       <form [formGroup]="form" class="form-wrapper" (ngSubmit)="editTodo()">
         <mat-form-field class="example-full-width" appearance="outline">
           <mat-label>Choose a date</mat-label>
@@ -21,6 +21,14 @@ import Expense from 'src/app/interface/expense.model';
             <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
           </mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Select type</mat-label>
+          <mat-select formControlName="type">
+            <mat-option value="expense">Expense</mat-option>
+            <mat-option value="income">Income</mat-option>
+          </mat-select>
+          <mat-hint align="end">Select expense type^</mat-hint>
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Name</mat-label>
@@ -64,21 +72,22 @@ import Expense from 'src/app/interface/expense.model';
             >Amount is required</mat-error
           >
         </mat-form-field>
-        <div mat-dialog-actions align="end">
+        <div mat-dialog-actions>
           <button
             mat-raised-button
             color="primary"
             type="submit"
+            class="btn-update"
             [disabled]="!form.valid"
           >
-            update expense
+            update
           </button>
-        </div>
-        <div mat-dialog-actions align="end">
+
           <button
             (click)="deleteExpense()"
             mat-raised-button
-            color="primary"
+            mat-button
+            color="warn"
             type="submit"
           >
             delete
@@ -86,7 +95,7 @@ import Expense from 'src/app/interface/expense.model';
         </div>
       </form>
       <div>{{ form.value | json }}</div>
-    </div>
+    </mat-card>
   `,
   styleUrls: ['./edit-expense.component.scss'],
 })
@@ -109,6 +118,7 @@ export class EditExpenseComponent implements OnInit {
         console.log(res);
         this.curExpense = res;
         this.form.get('name')?.patchValue(this.curExpense.name);
+        this.form.get('type')?.patchValue(this.curExpense.type);
         this.form.get('description')?.patchValue(this.curExpense.description);
         this.form.get('total')?.patchValue(this.curExpense.total);
         this.form.get('date')?.patchValue(this.curExpense.date);
@@ -117,6 +127,7 @@ export class EditExpenseComponent implements OnInit {
     this.form = this.fb.group({
       expense_date: [new Date(), [Validators.required]],
       name: [null, [Validators.required]],
+      type: ['expense', [Validators.required]],
       description: [null],
       total: [0.0, [Validators.required, Validators.required]],
     });

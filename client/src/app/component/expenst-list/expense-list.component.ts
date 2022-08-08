@@ -8,14 +8,16 @@ import { MatTableDataSource } from '@angular/material/table';
 @Component({
   selector: 'expense-list-todos',
   template: `
-    <div class="title-list">Expense list</div>
-    <button (click)="addTodo()">Add New Todo</button>
     <expense-date-selection></expense-date-selection>
     <div class="mat-elevation-z8">
       <table mat-table [dataSource]="list_of_expenses">
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef>Name</th>
           <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+        </ng-container>
+        <ng-container matColumnDef="type">
+          <th mat-header-cell *matHeaderCellDef>Type</th>
+          <td mat-cell *matCellDef="let element">{{ element.type }}</td>
         </ng-container>
 
         <ng-container matColumnDef="description">
@@ -53,7 +55,7 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class ExpenseListComponent {
   list_of_expenses: Array<Expense> = [];
-  displayedColumns: string[] = ['name', 'description', 'total', 'date'];
+  displayedColumns: string[] = ['name', 'type', 'description', 'total', 'date'];
   dataSource = new MatTableDataSource<Expense>(this.list_of_expenses);
 
   @ViewChild(MatPaginator)
@@ -73,9 +75,6 @@ export class ExpenseListComponent {
     });
   }
 
-  addTodo() {
-    this.router.navigate(['/', 'expense', 'add']);
-  }
   editExpense(expense: Expense) {
     console.log('expense,', expense);
     this.router.navigate(['/', 'expense', 'edit', expense._id]);

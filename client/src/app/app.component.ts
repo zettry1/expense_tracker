@@ -17,7 +17,15 @@ import { UserService } from './service/user.service';
       >
         <mat-icon>home</mat-icon>
       </button>
-      <span>Expense tracker</span>
+      <button
+        mat-icon-button
+        class="example-icon"
+        aria-label="Example icon-button with menu icon"
+        (click)="addTodo()"
+      >
+        <mat-icon>note_add</mat-icon>
+      </button>
+      <!-- <span>Expense tracker</span> -->
       <span class="nav-spacer"></span>
       <button
         mat-icon-button
@@ -93,7 +101,9 @@ export class AppComponent implements OnDestroy {
   ngOnDestroy(): void {
     this.sub.unsubscribe();
   }
-
+  addTodo() {
+    this.router.navigate(['/', 'expense', 'add']);
+  }
   logout(): void {
     this.userService.logout();
     this.router.navigate(['/', 'login']);

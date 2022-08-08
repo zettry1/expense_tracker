@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-add-expense',
   template: `
-    <div class="container">
+    <mat-card class="container">
       <form
         [formGroup]="form"
         class="form-wrapper"
@@ -24,6 +24,14 @@ import { Router } from '@angular/router';
             <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
           </mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Select type</mat-label>
+          <mat-select formControlName="type">
+            <mat-option value="expense">Expense</mat-option>
+            <mat-option value="income">Income</mat-option>
+          </mat-select>
+          <mat-hint align="end">Select expense type^</mat-hint>
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Name</mat-label>
@@ -79,7 +87,7 @@ import { Router } from '@angular/router';
         </div>
       </form>
       <div>{{ form.value | json }}</div>
-    </div>
+    </mat-card>
   `,
 
   styleUrls: ['./add-expense.component.scss'],
@@ -98,6 +106,7 @@ export class AddExpenseComponent implements OnInit {
     this.form = this.fb.group({
       expense_date: [new Date(), [Validators.required]],
       name: [null, [Validators.required]],
+      type: ['expense', [Validators.required]],
       description: [null],
       total: [0.0, [Validators.required, Validators.required]],
     });
