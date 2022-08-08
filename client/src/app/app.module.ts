@@ -3,51 +3,61 @@ import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppComponent } from './app.component';
 
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './component/login/login.component';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 // angular material
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatButtonModule} from '@angular/material/button';
-import { MatInputModule} from '@angular/material/input';
-import { MatCardModule} from '@angular/material/card';
-import { MatSnackBarModule} from '@angular/material/snack-bar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
-import { MatTableModule } from '@angular/material/table';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSelectModule } from '@angular/material/select';
+import { StoreModule } from '@ngrx/store';
 
-import { CheckTokenGuard } from './check-token.guard';
-import { AttachTokenInterceptor } from './attach-token.interceptor';
-import { HomeComponent } from './home/home.component';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatTableModule } from '@angular/material/table';
+import { MatListModule } from '@angular/material/list';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+
+import { MatCardModule } from '@angular/material/card';
+
+import { MatNativeDateModule } from '@angular/material/core';
+import { CheckTokenGuard } from './util/check-token.guard';
+import { AttachTokenInterceptor } from './util/attach-token.interceptor';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-// import { MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule } from  '@angular/material';
+
 @NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent,
-    HomeComponent,
-  ],
+  declarations: [AppComponent, LoginComponent],
   imports: [
     BrowserModule,
+    MatSliderModule,
+    MatListModule,
+    MatTableModule,
+    MatNativeDateModule,
+    MatCardModule,
+    MatDatepickerModule,
     HttpClientModule,
     ReactiveFormsModule,
+    StoreModule.forRoot({}, {}),
     RouterModule.forRoot([
-      // { path: '', redirectTo: 'login', pathMatch: 'full' },
-      { path: 'home', component: HomeComponent },
       { path: 'login', component: LoginComponent, pathMatch: 'full' },
       {
-        path: 'todos',
-        loadChildren: () => import('./todos/todos.module')
-          .then(module => module.TodosModule),
-        canActivate: [CheckTokenGuard]
+        path: 'expense',
+        loadChildren: () =>
+          import('./component/expenst-list/expense.module').then(
+            (module) => module.ExpenseModule
+          ),
+        canActivate: [CheckTokenGuard],
       },
-      // { path: '**', redirectTo: 'login' }
+      { path: '**', redirectTo: 'login' },
     ]),
+
     AppRoutingModule,
     BrowserAnimationsModule,
     MatButtonModule,
@@ -64,8 +74,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatSlideToggleModule,
     MatSelectModule,
   ],
-  providers: [{ provide: HTTP_INTERCEPTORS, useClass: AttachTokenInterceptor, multi: true },
-    {provide: MatFormFieldModule, useValue: {appearance: 'fill'}}],
-  bootstrap: [AppComponent]
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AttachTokenInterceptor,
+      multi: true,
+    },
+    { provide: MatFormFieldModule, useValue: { appearance: 'fill' } },
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
