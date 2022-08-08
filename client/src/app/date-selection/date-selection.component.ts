@@ -6,26 +6,26 @@ import { Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
     <mat-card class="calendar-card">
       <mat-calendar
         (selectedChange)="_onSelectedChange($event)"
-        [selected]="selected"
+        [selected]="selectedDate"
       ></mat-calendar>
     </mat-card>
-    <p>Selected date: {{ selected }}</p>
+    <p>Selected date: {{ selectedDate }}</p>
   </div>`,
   styleUrls: ['./date-selection.component.scss'],
 })
 export class DateSelectionComponent implements OnInit, OnChanges {
-  selected: Date | null;
+  selectedDate: Date | null;
 
   constructor() {
-    this.selected = new Date();
+    this.selectedDate = new Date();
   }
   _onSelectedChange(date: Date): void {
     console.log('date', date);
-    this.selected = date;
+    this.selectedDate = date;
   }
   ngOnChanges(changes: SimpleChanges): void {
     console.log(changes);
-    console.log(this.selected);
+    console.log(this.selectedDate);
   }
 
   ngOnInit(): void {}

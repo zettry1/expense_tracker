@@ -27,7 +27,7 @@ export class ExpenseService {
   }
 
   updateExpense(expense: Expense) {
-    return this.http.put(
+    return this.http.patch(
       'http://localhost:3000/expense/' + expense._id,
       expense
     );

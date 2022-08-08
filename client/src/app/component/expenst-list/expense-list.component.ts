@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import Expense from 'src/app/interface/expense.model';
 import { ExpenseService } from 'src/app/service/expense.service';
@@ -9,6 +9,7 @@ import { MatTableDataSource } from '@angular/material/table';
   selector: 'expense-list-todos',
   template: `
     <div class="title-list">Expense list</div>
+    <button (click)="addTodo()">Add New Todo</button>
     <expense-date-selection></expense-date-selection>
     <div class="mat-elevation-z8">
       <table mat-table [dataSource]="list_of_expenses">
@@ -33,7 +34,11 @@ import { MatTableDataSource } from '@angular/material/table';
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumns"
+          (click)="editExpense(row)"
+        ></tr>
       </table>
 
       <mat-paginator
@@ -44,19 +49,7 @@ import { MatTableDataSource } from '@angular/material/table';
       </mat-paginator>
     </div>
   `,
-  styles: [
-    `
-      table {
-        width: 100%;
-      }
-    `,
-    `
-      title-list: {
-        font-size: '3rem';
-        font-weight: bold;
-      }
-    `,
-  ],
+  styleUrls: ['./expense-list.component.scss'],
 })
 export class ExpenseListComponent {
   list_of_expenses: Array<Expense> = [];
@@ -83,7 +76,8 @@ export class ExpenseListComponent {
   addTodo() {
     this.router.navigate(['/', 'expense', 'add']);
   }
-  updateTodo(expense: Expense) {
+  editExpense(expense: Expense) {
+    console.log('expense,', expense);
     this.router.navigate(['/', 'expense', 'edit', expense._id]);
   }
 }

@@ -1,6 +1,7 @@
 export default interface Expense {
   _id: string;
-  fullname: string;
-  email: string;
-  user_id: string;
+  name: string;
+  description: string;
+  total: number;
+  date: string;
 }

@@ -21,36 +21,24 @@ import { StoreModule } from '@ngrx/store';
 
 import { MatSliderModule } from '@angular/material/slider';
 import { MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatListModule } from '@angular/material/list';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 
 import { MatCardModule } from '@angular/material/card';
-import { ExpenseListComponent } from './component/expenst-list/expense-list.component';
-import { DateSelectionComponent } from './date-selection/date-selection.component';
+
 import { MatNativeDateModule } from '@angular/material/core';
 import { CheckTokenGuard } from './util/check-token.guard';
 import { AttachTokenInterceptor } from './util/attach-token.interceptor';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { AddExpenseComponent } from './component/add-expense/add-expense.component';
-import { EditExpenseComponent } from './component/edit-expense/edit-expense.component';
-@NgModule({
-  declarations: [
-    AppComponent,
-    LoginComponent,
 
-    ExpenseListComponent,
-    DateSelectionComponent,
-    AddExpenseComponent,
-    EditExpenseComponent,
-  ],
+@NgModule({
+  declarations: [AppComponent, LoginComponent],
   imports: [
     BrowserModule,
     MatSliderModule,
     MatListModule,
     MatTableModule,
-    MatPaginatorModule,
     MatNativeDateModule,
     MatCardModule,
     MatDatepickerModule,
@@ -61,11 +49,10 @@ import { EditExpenseComponent } from './component/edit-expense/edit-expense.comp
       { path: 'login', component: LoginComponent, pathMatch: 'full' },
       {
         path: 'expense',
-        // loadChildren: () =>
-        //   import('./component/expenst-list/expense-list.component').then(
-        //     (module) => module.ExpenseListComponent
-        //   ),
-        component: ExpenseListComponent,
+        loadChildren: () =>
+          import('./component/expenst-list/expense.module').then(
+            (module) => module.ExpenseModule
+          ),
         canActivate: [CheckTokenGuard],
       },
       { path: '**', redirectTo: 'login' },
