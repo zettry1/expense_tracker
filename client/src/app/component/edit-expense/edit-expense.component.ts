@@ -74,6 +74,16 @@ import Expense from 'src/app/interface/expense.model';
             update expense
           </button>
         </div>
+        <div mat-dialog-actions align="end">
+          <button
+            (click)="deleteExpense()"
+            mat-raised-button
+            color="primary"
+            type="submit"
+          >
+            delete
+          </button>
+        </div>
       </form>
       <div>{{ form.value | json }}</div>
     </div>
@@ -118,7 +128,14 @@ export class EditExpenseComponent implements OnInit {
         ...this.form.value,
       })
       .subscribe((response) => {
-        console.log('response');
+        console.log('response', response);
+        this.router.navigate(['/', 'expense']);
+      });
+  }
+  deleteExpense() {
+    this.expenseService
+      .deleteExpenseById(this.curExpense._id)
+      .subscribe((response) => {
         this.router.navigate(['/', 'expense']);
       });
   }
