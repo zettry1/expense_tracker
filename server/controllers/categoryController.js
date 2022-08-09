@@ -3,7 +3,7 @@ const Category = require("../models/categoryModel");
 async function addCategory(req, res, next) {
   try {
     const { name } = req.body;
-    const imagePath = "http://localhost:3000/images/" + req.file.filename; // Note: set path dynamically
+    const imagePath = process.env.image_path + req.file.filename; // Note: set path dynamically
     const category = new Category({
       name,
       imagePath,
