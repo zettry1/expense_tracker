@@ -5,14 +5,13 @@ const morgan = require("morgan");
 const path = require("path");
 const bodyParser = require("body-parser");
 require("dotenv").config();
-require("dotenv").config();
 
 const checkToken = require("./middlewares/checkToken");
 const expenseRouter = require("./routers/expenseRouter");
 const categoryRouter = require("./routers/categoryRouter");
 
 const app = express();
-mongoose.connect(process.env.dotenv, {
+mongoose.connect(process.env.DB_SOURCE, {
   useNewUrlParser: true,
 });
 
