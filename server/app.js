@@ -17,7 +17,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/expense", checkToken, expenseRouter);
-app.use("/categories", checkToken, categoryRouter);
+app.use("/category", checkToken, categoryRouter);
 app.use("/users", require("./routers/userRouter"));
 
 app.use((req, res, next) => {

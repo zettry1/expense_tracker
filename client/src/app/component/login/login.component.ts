@@ -16,7 +16,7 @@ export class LoginComponent {
     private router: Router
   ) {
     this.loginForm = this.fb.group({
-      email: ['orgilnm11@gmail.com'],
+      email: ['ttsogt@miu.edu'],
       password: ['123456'],
     });
   }
@@ -28,7 +28,7 @@ export class LoginComponent {
         // set the state
         this.userService.userState$.next(response);
         this.userService.persistState();
-        this.router.navigate(['/', 'todos']);
+        this.router.navigate(['/', 'expense']);
       });
   }
 }

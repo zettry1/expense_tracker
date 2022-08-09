@@ -1,9 +1,22 @@
 const Category = require("../models/categoryModel");
 
 async function addCategory(req, res, next) {
+
   try {
-    const results = await Category.create(req.body);
-    res.json(results);
+    const { name } = req.body;
+    console.log(name);
+    const imagePath = 'http://localhost:3000/images/' + req.file.filename; // Note: set path dynamically
+    const category = new Category({
+      name,
+      imagePath,
+    });
+    console.log("Temka", category)
+    const createdCategory = await category.save();
+    res.status(200).json({
+      category: {
+        ...createdCategory._doc,
+      },
+    });
   } catch (error) {
     next(error);
   }
@@ -12,6 +25,7 @@ async function addCategory(req, res, next) {
 async function getCategories(req, res, next) {
   try {
     const results = await Category.find({});
+    console.log(results);
     res.json(results);
   } catch (error) {
     next(error);
