@@ -1,9 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { of, Observable, Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+
 import { Category } from '../interface/category';
+
+import { environment } from '../../environments/environment';
 
 @Injectable({ providedIn: 'root' })
 export class CategoriesService {
@@ -12,9 +14,9 @@ export class CategoriesService {
   constructor(private http: HttpClient) {}
 
   getCategories() {
-    return this.http.get<Array<any>>('http://localhost:3000/category/');
+    return this.http.get<Array<any>>(`${environment.apiURL}category/`);
     // return this.http
-    //   .get<{ categs: Category[] }>('http://localhost:3000/category/')
+    //   .get<{ categs: Category[] }>(`${e.apiURL}`/category/')
     //   .pipe(
     //     map((categData) => {
     //       return categData.categs;
@@ -31,24 +33,27 @@ export class CategoriesService {
   }
 
   getCategoryById(id: string) {
-    return this.http.get<any>('http://localhost:3000/categories/' + id);
+    return this.http.get<any>(`${environment.apiURL}categories/` + id);
   }
 
   addNewCateegory(name: string, image: File): void {
-    // return this.http.post('http://localhost:3000/categories/', category);
-      const categoryData = new FormData();
-      categoryData.append("name", name);
-      categoryData.append("image", image, name);
-      this.http
-        .post<{ category: Category }>('http://localhost:3000/category/', categoryData)
-        .subscribe((categoryData) => {
-          const category: Category = {
-            name: name,
-            imagePath: categoryData.category.imagePath,
-          };
-          console.log(category);
-          this.categories.push(category);
-          this.categories$.next(this.categories);
-        });
+    // return this.http.post(`${e.apiURL}`/categories/', category);
+    const categoryData = new FormData();
+    categoryData.append('name', name);
+    categoryData.append('image', image, name);
+    this.http
+      .post<{ category: Category }>(
+        `${environment.apiURL}category/`,
+        categoryData
+      )
+      .subscribe((categoryData) => {
+        const category: Category = {
+          name: name,
+          imagePath: categoryData.category.imagePath,
+        };
+        console.log(category);
+        this.categories.push(category);
+        this.categories$.next(this.categories);
+      });
   }
 }
