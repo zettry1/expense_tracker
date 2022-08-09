@@ -2,6 +2,8 @@ const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const morgan = require("morgan");
+const path = require('path');
+const bodyParser = require('body-parser');
 
 const checkToken = require("./middlewares/checkToken");
 const expenseRouter = require("./routers/expenseRouter");
@@ -19,6 +21,8 @@ app.use(express.json());
 app.use("/expense", checkToken, expenseRouter);
 app.use("/category", checkToken, categoryRouter);
 app.use("/users", require("./routers/userRouter"));
+
+app.use('/images', express.static(path.join('images')));
 
 app.use((req, res, next) => {
   next(new Error("Route Not Found"));
