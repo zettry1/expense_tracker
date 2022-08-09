@@ -1,0 +1,11 @@
+<!-- <p>category-list works!</p> -->
+<h1>All Categories</h1>
+<hr />
+<div *ngIf="categories?.length">
+  <div *ngFor="let category of categories" class="category">
+    <img [src]="category.imagePath" [alt]="category.name">
+    <div>
+      <span>{{ category.name }}</span>
+    </div>
+  </div>
+</div>
