@@ -83,7 +83,6 @@ export class ExpenseListComponent {
       this.expenseService
         .getExpenses(date)
         .subscribe((response: Array<Expense>) => {
-          console.log('response', response);
           this.list_of_expenses = response;
           response.map((e: Expense) => {
             if (e.type === 'income') {
@@ -107,7 +106,6 @@ export class ExpenseListComponent {
   }
 
   editExpense(expense: Expense) {
-    console.log('expense,', expense);
     this.router.navigate(['/', 'expense', 'edit', expense._id]);
   }
 }

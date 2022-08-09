@@ -114,7 +114,6 @@ export class EditExpenseComponent implements OnInit {
         )
       )
       .subscribe((res) => {
-        console.log(res);
         this.curExpense = res;
         this.form.get('name')?.patchValue(this.curExpense.name);
         this.form.get('type')?.patchValue(this.curExpense.type);
@@ -139,7 +138,6 @@ export class EditExpenseComponent implements OnInit {
         date: formatDate(this.form.value.expense_date, 'yyyy-MM-dd', 'en-US'),
       })
       .subscribe((response) => {
-        console.log('response', response);
         this.router.navigate(['/', 'expense']);
       });
   }

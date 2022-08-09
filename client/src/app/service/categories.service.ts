@@ -51,7 +51,6 @@ export class CategoriesService {
           name: name,
           imagePath: categoryData.category.imagePath,
         };
-        console.log(category);
         this.categories.push(category);
         this.categories$.next(this.categories);
       });

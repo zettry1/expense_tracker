@@ -21,11 +21,9 @@ export class AddCategoryComponent implements OnInit {
     private categoriesService: CategoriesService
   ) {}
   fetchCategories() {
-    console.log('fetch data');
     this.categoriesService
       .getCategories()
       .subscribe((categs: Array<Category>) => {
-        console.log('categs,categs', categs);
         this.categories = categs;
       });
   }
@@ -38,7 +36,6 @@ export class AddCategoryComponent implements OnInit {
   }
 
   saveData() {
-    console.log('save category');
     this.categoryService.addNewCateegory(
       this.form.value.name,
       this.form.value.image
@@ -46,7 +43,6 @@ export class AddCategoryComponent implements OnInit {
     this.form.reset();
     this.imageData = '';
     this.fetchCategories();
-    // this.router.navigate(['/', 'category']);
   }
 
   onFileSelect(event: Event) {

@@ -25,7 +25,6 @@ export class DateSelectionComponent implements OnInit, OnChanges {
 
   constructor(private store: Store) {
     const seaschDate = store.select(selectSearchDate);
-    console.log(seaschDate);
     this.expenseState$ = seaschDate;
     this.selectedDate = new Date();
   }
@@ -37,10 +36,7 @@ export class DateSelectionComponent implements OnInit, OnChanges {
       })
     );
   }
-  ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
-    console.log(this.selectedDate);
-  }
+  ngOnChanges(changes: SimpleChanges): void {}
 
   ngOnInit(): void {}
 }
