@@ -8,14 +8,29 @@ import { MatTableDataSource } from '@angular/material/table';
 @Component({
   selector: 'expense-list-todos',
   template: `
-    <div class="title-list">Expense list</div>
-    <button (click)="addTodo()">Add New Todo</button>
+    <div class="expense-summary">
+      <mat-card color="primary"> Income: $ {{ income_amount }} </mat-card>
+      <mat-card class="expense-amount">
+        Expense: $ {{ expense_amount }}
+      </mat-card>
+      <mat-card class="balance-amount">
+        Balance: $ {{ income_amount - expense_amount }}
+      </mat-card>
+    </div>
     <expense-date-selection></expense-date-selection>
     <div class="mat-elevation-z8">
       <table mat-table [dataSource]="list_of_expenses">
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef>Name</th>
           <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+        </ng-container>
+        <ng-container matColumnDef="type">
+          <th mat-header-cell *matHeaderCellDef>Type</th>
+          <td mat-cell *matCellDef="let element">
+            <mat-card [ngClass]="['cell-expense', 'cell-income']">{{
+              element.type
+            }}</mat-card>
+          </td>
         </ng-container>
 
         <ng-container matColumnDef="description">
@@ -53,7 +68,9 @@ import { MatTableDataSource } from '@angular/material/table';
 })
 export class ExpenseListComponent {
   list_of_expenses: Array<Expense> = [];
-  displayedColumns: string[] = ['name', 'description', 'total', 'date'];
+  income_amount: number = 0.0;
+  expense_amount: number = 0.0;
+  displayedColumns: string[] = ['name', 'type', 'description', 'total', 'date'];
   dataSource = new MatTableDataSource<Expense>(this.list_of_expenses);
 
   @ViewChild(MatPaginator)
@@ -61,6 +78,14 @@ export class ExpenseListComponent {
   constructor(private expenseService: ExpenseService, private router: Router) {
     this.expenseService.getExpenses().subscribe((response: Array<Expense>) => {
       this.list_of_expenses = response;
+      response.map((e: Expense) => {
+        if (e.type === 'income') {
+          this.income_amount += e.total;
+        } else {
+          this.expense_amount += e.total;
+        }
+      });
+
       this.dataSource.paginator = this.paginator;
     });
   }
@@ -73,9 +98,6 @@ export class ExpenseListComponent {
     });
   }
 
-  addTodo() {
-    this.router.navigate(['/', 'expense', 'add']);
-  }
   editExpense(expense: Expense) {
     console.log('expense,', expense);
     this.router.navigate(['/', 'expense', 'edit', expense._id]);

@@ -55,6 +55,22 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
           ),
         canActivate: [CheckTokenGuard],
       },
+      {
+        path: 'profile',
+        loadChildren: () =>
+          import('./component/profile/profile.module').then(
+            (module) => module.ProfileModule
+          ),
+        canActivate: [CheckTokenGuard],
+      },
+      {
+        path: 'category',
+        loadChildren: () =>
+          import('./component/category/category.module').then(
+            (module) => module.CategoryModule
+          ),
+        canActivate: [CheckTokenGuard],
+      },
       { path: '**', redirectTo: 'login' },
     ]),
 
