@@ -34,6 +34,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CategoryListComponent } from './component/category-list/category-list.component';
 import { AddCategoryComponent } from './component/add-category/add-category.component';
 
+import { expenseReducer } from './state/expenseState/expense.reducer';
+
 @NgModule({
   declarations: [AppComponent, LoginComponent],
   imports: [
@@ -46,6 +48,7 @@ import { AddCategoryComponent } from './component/add-category/add-category.comp
     MatDatepickerModule,
     HttpClientModule,
     ReactiveFormsModule,
+
     AppRoutingModule,
     BrowserAnimationsModule,
     MatButtonModule,
@@ -61,7 +64,8 @@ import { AddCategoryComponent } from './component/add-category/add-category.comp
     MatDividerModule,
     MatSlideToggleModule,
     MatSelectModule,
-    StoreModule.forRoot({}, {}),
+    StoreModule.forRoot({ expenseState: expenseReducer }),
+
     RouterModule.forRoot([
       { path: 'login', component: LoginComponent, pathMatch: 'full' },
       {
@@ -90,8 +94,6 @@ import { AddCategoryComponent } from './component/add-category/add-category.comp
       },
       { path: '**', redirectTo: 'login' },
     ]),
-
-
   ],
   providers: [
     {

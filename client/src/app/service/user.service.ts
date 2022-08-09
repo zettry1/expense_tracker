@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { User } from '../interface/userInterface';
 import jwt_decode from 'jwt-decode';
-
+import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root',
 })
@@ -14,7 +14,7 @@ export class UserService {
 
   login(email: string, password: string) {
     return this.http.post<{ token: string }>(
-      'http://localhost:3000/users/login',
+      `${environment.apiURL}users/login`,
       { email, password }
     );
   }

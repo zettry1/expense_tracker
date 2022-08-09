@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ExpenseService } from 'src/app/service/expense.service';
 import { Router, ActivatedRoute } from '@angular/router';
-import { mergeMap, pipe } from 'rxjs';
+import { mergeMap } from 'rxjs';
 import Expense from 'src/app/interface/expense.model';
-
+import { formatDate } from '@angular/common';
 @Component({
   selector: 'app-edit-expense',
   template: `
@@ -136,6 +136,7 @@ export class EditExpenseComponent implements OnInit {
       .updateExpense({
         ...this.curExpense,
         ...this.form.value,
+        date: formatDate(this.form.value.expense_date, 'yyyy-MM-dd', 'en-US'),
       })
       .subscribe((response) => {
         console.log('response', response);

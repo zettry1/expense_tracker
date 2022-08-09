@@ -4,19 +4,15 @@ import Expense from 'src/app/interface/expense.model';
 import { ExpenseService } from 'src/app/service/expense.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-
+import { Store } from '@ngrx/store';
+import { selectSearchDate } from '../../state/expenseState/expense.selectors';
 @Component({
   selector: 'expense-list-todos',
   template: `
-    <div class="expense-summary">
-      <mat-card color="primary"> Income: $ {{ income_amount }} </mat-card>
-      <mat-card class="expense-amount">
-        Expense: $ {{ expense_amount }}
-      </mat-card>
-      <mat-card class="balance-amount">
-        Balance: $ {{ income_amount - expense_amount }}
-      </mat-card>
-    </div>
+    <expense-summary
+      [income_amount]="income_amount"
+      [expense_amount]="expense_amount"
+    ></expense-summary>
     <expense-date-selection></expense-date-selection>
     <div class="mat-elevation-z8">
       <table mat-table [dataSource]="list_of_expenses">
@@ -75,18 +71,30 @@ export class ExpenseListComponent {
 
   @ViewChild(MatPaginator)
   paginator!: MatPaginator;
-  constructor(private expenseService: ExpenseService, private router: Router) {
-    this.expenseService.getExpenses().subscribe((response: Array<Expense>) => {
-      this.list_of_expenses = response;
-      response.map((e: Expense) => {
-        if (e.type === 'income') {
-          this.income_amount += e.total;
-        } else {
-          this.expense_amount += e.total;
-        }
-      });
+  constructor(
+    private expenseService: ExpenseService,
+    private router: Router,
+    private store: Store
+  ) {
+    const seaschDate = store.select(selectSearchDate);
+    seaschDate.subscribe((date) => {
+      this.income_amount = 0;
+      this.expense_amount = 0;
+      this.expenseService
+        .getExpenses(date)
+        .subscribe((response: Array<Expense>) => {
+          console.log('response', response);
+          this.list_of_expenses = response;
+          response.map((e: Expense) => {
+            if (e.type === 'income') {
+              this.income_amount += e.total;
+            } else {
+              this.expense_amount += e.total;
+            }
+          });
 
-      this.dataSource.paginator = this.paginator;
+          this.dataSource.paginator = this.paginator;
+        });
     });
   }
 

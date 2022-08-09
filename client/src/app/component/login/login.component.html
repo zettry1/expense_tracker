@@ -9,8 +9,12 @@
           <form action="login()" [formGroup]="loginForm" (ngSubmit)="login()">
             <mat-form-field class="full-width" appearance="outline">
               <mat-label>Email</mat-label>
-              <input required matInput placeholder="Enter email" />
-              <mat-hint>Valid Email Address</mat-hint>
+              <input
+                required
+                matInput
+                placeholder="Enter email"
+                formControlName="email"
+              />
             </mat-form-field>
 
             <mat-form-field class="full-width" appearance="outline">
@@ -19,6 +23,7 @@
                 type="password"
                 required
                 matInput
+                formControlName="password"
                 placeholder="Enter password"
               />
             </mat-form-field>
