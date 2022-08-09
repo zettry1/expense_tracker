@@ -6,23 +6,6 @@ table {
   cursor: pointer;
 }
 
-.expense-summary {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  margin: 1rem 0;
-}
-.mat-card {
-  background-color: orange;
-  color: white;
-}
-.expense-amount {
-  background-color: rgb(241, 104, 104);
-}
-.balance-amount {
-  background-color: rgb(87, 87, 243);
-}
-
 .cell-income {
   background-color: orange;
   color: white;

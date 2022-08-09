@@ -2,7 +2,6 @@ const Expense = require("../models/expenseModel");
 
 async function addExpense(req, res, next) {
   try {
-    console.log("req.body", req.body);
     const results = await Expense.create(req.body);
     res.json(results);
   } catch (error) {
@@ -13,24 +12,19 @@ async function addExpense(req, res, next) {
 
 async function getExpenses(req, res, next) {
   try {
-    console.log("req.user.user_id", req.user.user_id);
-    const results = await Expense.find(
-      //   { description: 0 }
-      { "user.user_id": req.user.user_id }
-    );
+    const results = await Expense.find({ "user.user_id": req.user.user_id });
     res.json(results);
   } catch (error) {
-    console.log("error", error);
     next(error);
   }
 }
 
 async function getExpensesByDate(req, res, next) {
   try {
-    const results = await Expense.find(
-      { "user.user_id": req.user.user_id },
-      { date: req.body.date }
-    );
+    const results = await Expense.find({
+      "user.user_id": req.user.user_id,
+      date: req.query.date,
+    });
     res.json(results);
   } catch (error) {
     next(error);

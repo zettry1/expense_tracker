@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ExpenseService } from 'src/app/service/expense.service';
 import { UserService } from 'src/app/service/user.service';
 import { Router } from '@angular/router';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-add-expense',
@@ -115,7 +116,8 @@ export class AddExpenseComponent implements OnInit {
     this.expenseService
       .addNewExpense({
         ...form.value,
-        completed: false,
+        date: formatDate(form.value.expense_date, 'yyyy-MM-dd', 'en-US'),
+
         user: {
           user_id: this.userService.getUserState()?.user_id,
           fullname: this.userService.getUserState()?.fullname,

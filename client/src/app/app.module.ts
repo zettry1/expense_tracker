@@ -32,6 +32,8 @@ import { AttachTokenInterceptor } from './util/attach-token.interceptor';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
+import { expenseReducer } from './state/expenseState/expense.reducer';
+
 @NgModule({
   declarations: [AppComponent, LoginComponent],
   imports: [
@@ -44,7 +46,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatDatepickerModule,
     HttpClientModule,
     ReactiveFormsModule,
-    StoreModule.forRoot({}, {}),
+    StoreModule.forRoot({ expenseState: expenseReducer }),
     RouterModule.forRoot([
       { path: 'login', component: LoginComponent, pathMatch: 'full' },
       {
