@@ -84,9 +84,9 @@ button {
   border-radius: 4px;
   margin: 1em;
 }
-/* h1, .middle{
+h1, .middle{
   text-align: center;
-} */
+}
 button:hover {
   cursor: pointer;
   background-color: #444;
