@@ -10,6 +10,7 @@ import { UserService } from './service/user.service';
   template: `
     <mat-toolbar color="primary">
       <button
+        *ngIf="isLoggedIn"
         mat-icon-button
         class="example-icon"
         aria-label="Example icon-button with menu icon"
@@ -18,6 +19,7 @@ import { UserService } from './service/user.service';
         <mat-icon>home</mat-icon>
       </button>
       <button
+        *ngIf="isLoggedIn"
         mat-icon-button
         class="example-icon"
         aria-label="Example icon-button with menu icon"
