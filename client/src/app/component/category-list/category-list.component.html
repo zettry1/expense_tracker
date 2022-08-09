@@ -1,0 +1,20 @@
+<!-- <p>category-list works!</p> -->
+<h1>All Categories</h1>
+<hr />
+<div class="bootstrap-wrapper">
+  <div class="container">
+    <div class="row mt20">
+      <div class="col-md-6 offset-md-3">
+        <div *ngIf="categories?.length">
+          <div *ngFor="let category of categories" class="category">
+            <img [src]="category.imagePath" [alt]="category.name">
+            <div class="middle">
+              <span>{{ category.name }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

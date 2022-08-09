@@ -31,6 +31,8 @@ import { CheckTokenGuard } from './util/check-token.guard';
 import { AttachTokenInterceptor } from './util/attach-token.interceptor';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { CategoryListComponent } from './component/category-list/category-list.component';
+import { AddCategoryComponent } from './component/add-category/add-category.component';
 
 import { expenseReducer } from './state/expenseState/expense.reducer';
 
@@ -46,7 +48,24 @@ import { expenseReducer } from './state/expenseState/expense.reducer';
     MatDatepickerModule,
     HttpClientModule,
     ReactiveFormsModule,
+
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatSnackBarModule,
+    MatToolbarModule,
+    MatInputModule,
+    MatCardModule,
+    MatMenuModule,
+    MatIconModule,
+    MatButtonModule,
+    MatTableModule,
+    MatDividerModule,
+    MatSlideToggleModule,
+    MatSelectModule,
     StoreModule.forRoot({ expenseState: expenseReducer }),
+
     RouterModule.forRoot([
       { path: 'login', component: LoginComponent, pathMatch: 'full' },
       {
@@ -68,29 +87,13 @@ import { expenseReducer } from './state/expenseState/expense.reducer';
       {
         path: 'category',
         loadChildren: () =>
-          import('./component/category/category.module').then(
+          import('./component/category-list/category.module').then(
             (module) => module.CategoryModule
           ),
         canActivate: [CheckTokenGuard],
       },
       { path: '**', redirectTo: 'login' },
     ]),
-
-    AppRoutingModule,
-    BrowserAnimationsModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatSnackBarModule,
-    MatToolbarModule,
-    MatInputModule,
-    MatCardModule,
-    MatMenuModule,
-    MatIconModule,
-    MatButtonModule,
-    MatTableModule,
-    MatDividerModule,
-    MatSlideToggleModule,
-    MatSelectModule,
   ],
   providers: [
     {

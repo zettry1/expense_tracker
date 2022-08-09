@@ -1,0 +1,34 @@
+<h1>Create Category</h1>
+<hr/>
+<div class="bootstrap-wrapper">
+  <div class="container">
+    <div class="row mt20">
+      <div class="col-md-6 offset-md-3">
+        <form [formGroup]="form" (submit)="saveData()">
+          <div>
+            <input type="text" formControlName="name" placeholder="Enter name..." required>
+          </div>
+          <div>
+            <input (change)="onFileSelect($event)" type="file" required>
+          </div>
+          <div *ngIf="imageData">
+            <img [src]="imageData" [alt]="form.value.name">
+          </div>
+          <div>
+            <button
+                    mat-raised-button
+                    color="primary"
+                    type="submit"
+                    [disabled]="!form.valid"
+                  >
+                  Create Category
+                  </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<hr>
+<app-category-list></app-category-list>
