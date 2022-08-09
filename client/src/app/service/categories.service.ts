@@ -13,8 +13,22 @@ export class CategoriesService {
 
   getCategories() {
     return this.http.get<Array<any>>('http://localhost:3000/category/');
+    // return this.http
+    //   .get<{ categs: Category[] }>('http://localhost:3000/category/')
+    //   .pipe(
+    //     map((categData) => {
+    //       return categData.categs;
+    //     })
+    //   )
+    //   .subscribe((categories) => {
+    //     this.categories = categories;
+    //     this.categories$.next(this.categories);
+    //   });
   }
 
+  getCategoriesStream() {
+    return this.categories$.asObservable();
+  }
 
   getCategoryById(id: string) {
     return this.http.get<any>('http://localhost:3000/categories/' + id);
@@ -29,7 +43,6 @@ export class CategoriesService {
         .post<{ category: Category }>('http://localhost:3000/category/', categoryData)
         .subscribe((categoryData) => {
           const category: Category = {
-            _id: categoryData.category._id,
             name: name,
             imagePath: categoryData.category.imagePath,
           };
