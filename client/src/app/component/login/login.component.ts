@@ -16,8 +16,8 @@ export class LoginComponent {
     private router: Router
   ) {
     this.loginForm = this.fb.group({
-      email: ['ttsogt@miu.edu'],
-      password: ['123456'],
+      email: [''],
+      password: [''],
     });
   }
 
