@@ -14,7 +14,7 @@ export class UserService {
 
   login(email: string, password: string) {
     return this.http.post<{ token: string }>(
-      `${environment.apiURL}/users/login`,
+      `${environment.apiURL}users/login`,
       { email, password }
     );
   }
