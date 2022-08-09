@@ -111,13 +111,14 @@ export class AddExpenseComponent implements OnInit {
       total: [0.0, [Validators.required, Validators.required]],
     });
   }
+  //{ categ_id: mongoose.Types.ObjectId, name: String },
 
   saveDetails(form: any) {
     this.expenseService
       .addNewExpense({
         ...form.value,
         date: formatDate(form.value.expense_date, 'yyyy-MM-dd', 'en-US'),
-
+        category: { categ_id: form.value.categ_id, name: '' },
         user: {
           user_id: this.userService.getUserState()?.user_id,
           fullname: this.userService.getUserState()?.fullname,
