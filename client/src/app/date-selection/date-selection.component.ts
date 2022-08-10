@@ -13,9 +13,6 @@ import { setSearchDate } from '../state/expenseState/expense.actions';
         [selected]="selectedDate"
       ></mat-calendar>
     </mat-card>
-    <p>Selected date: {{ selectedDate }}</p>
-
-    <div>searchDate: {{ expenseState$ | async }}</div>
   </div>`,
   styleUrls: ['./date-selection.component.scss'],
 })

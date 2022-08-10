@@ -4,6 +4,8 @@ import { ExpenseService } from 'src/app/service/expense.service';
 import { UserService } from 'src/app/service/user.service';
 import { Router } from '@angular/router';
 import { formatDate } from '@angular/common';
+import { CategoriesService } from 'src/app/service/categories.service';
+import { Category } from 'src/app/interface/category';
 
 @Component({
   selector: 'app-add-expense',
@@ -33,6 +35,24 @@ import { formatDate } from '@angular/common';
             <mat-option value="income">Income</mat-option>
           </mat-select>
           <mat-hint align="end">Select expense type^</mat-hint>
+        </mat-form-field>
+        <mat-form-field appearance="outline">
+          <mat-label>Select category</mat-label>
+          <mat-select formControlName="categ_id">
+            <mat-option
+              *ngFor="let cat of categories"
+              [value]="cat._id"
+              class="cat-option"
+              ><img
+                with="20"
+                height="20"
+                [src]="cat.imagePath"
+                [alt]="cat.name"
+                class="img-category"
+              />{{ cat.name }}
+            </mat-option>
+          </mat-select>
+          <mat-hint align="end">Select category</mat-hint>
         </mat-form-field>
         <mat-form-field appearance="outline">
           <mat-label>Name</mat-label>
@@ -94,21 +114,32 @@ import { formatDate } from '@angular/common';
 })
 export class AddExpenseComponent implements OnInit {
   form: FormGroup = new FormGroup({});
+  categories: Array<Category> = [];
 
   constructor(
     private fb: FormBuilder,
     private expenseService: ExpenseService,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private categoriesService: CategoriesService
   ) {}
-
+  fetchCategories() {
+    this.categoriesService
+      .getCategories()
+      .subscribe((categs: Array<Category>) => {
+        console.log('categs', categs);
+        this.categories = categs;
+      });
+  }
   ngOnInit(): void {
+    this.fetchCategories();
     this.form = this.fb.group({
       expense_date: [new Date(), [Validators.required]],
       name: [null, [Validators.required]],
       type: ['expense', [Validators.required]],
       description: [null],
       total: [0.0, [Validators.required, Validators.required]],
+      categ_id: ['', Validators.required],
     });
   }
   //{ categ_id: mongoose.Types.ObjectId, name: String },
@@ -118,7 +149,11 @@ export class AddExpenseComponent implements OnInit {
       .addNewExpense({
         ...form.value,
         date: formatDate(form.value.expense_date, 'yyyy-MM-dd', 'en-US'),
-        category: { categ_id: form.value.categ_id, name: '' },
+        category: {
+          categ_id: form.value.categ_id,
+          name: this.categories.find((c) => c._id === this.form.value.categ_id)
+            ?.name,
+        },
         user: {
           user_id: this.userService.getUserState()?.user_id,
           fullname: this.userService.getUserState()?.fullname,

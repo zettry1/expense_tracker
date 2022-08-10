@@ -5,11 +5,13 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { mergeMap } from 'rxjs';
 import Expense from 'src/app/interface/expense.model';
 import { formatDate } from '@angular/common';
+import { Category } from 'src/app/interface/category';
+import { CategoriesService } from 'src/app/service/categories.service';
 @Component({
   selector: 'app-edit-expense',
   template: `
     <mat-card class="container">
-      <form [formGroup]="form" class="form-wrapper" (ngSubmit)="editTodo()">
+      <form [formGroup]="form" class="form-wrapper" (ngSubmit)="editExpense()">
         <mat-form-field class="example-full-width" appearance="outline">
           <mat-label>Choose a date</mat-label>
           <input
@@ -30,6 +32,26 @@ import { formatDate } from '@angular/common';
           </mat-select>
           <mat-hint align="end">Select expense type^</mat-hint>
         </mat-form-field>
+
+        <mat-form-field appearance="outline">
+          <mat-label>Select category</mat-label>
+          <mat-select formControlName="categ_id">
+            <mat-option
+              *ngFor="let cat of categories"
+              [value]="cat._id"
+              class="cat-option"
+              ><img
+                with="20"
+                height="20"
+                [src]="cat.imagePath"
+                [alt]="cat.name"
+                class="img-category"
+              />{{ cat.name }}
+            </mat-option>
+          </mat-select>
+          <mat-hint align="end">Select category</mat-hint>
+        </mat-form-field>
+
         <mat-form-field appearance="outline">
           <mat-label>Name</mat-label>
           <input
@@ -100,13 +122,24 @@ import { formatDate } from '@angular/common';
 })
 export class EditExpenseComponent implements OnInit {
   form: FormGroup = new FormGroup({});
+  categories: Array<Category> = [];
+
   curExpense!: Expense;
+  fetchCategories() {
+    this.categoriesService
+      .getCategories()
+      .subscribe((categs: Array<Category>) => {
+        this.categories = categs;
+      });
+  }
   constructor(
     private ar: ActivatedRoute,
     private expenseService: ExpenseService,
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private categoriesService: CategoriesService
   ) {
+    this.fetchCategories();
     this.ar.paramMap
       .pipe(
         mergeMap((params: any) =>
@@ -120,6 +153,9 @@ export class EditExpenseComponent implements OnInit {
         this.form.get('description')?.patchValue(this.curExpense.description);
         this.form.get('total')?.patchValue(this.curExpense.total);
         this.form.get('date')?.patchValue(this.curExpense.date);
+        this.form
+          .get('categ_id')
+          ?.patchValue(this.curExpense.category?.categ_id);
       });
 
     this.form = this.fb.group({
@@ -128,14 +164,20 @@ export class EditExpenseComponent implements OnInit {
       type: ['expense', [Validators.required]],
       description: [null],
       total: [0.0, [Validators.required, Validators.required]],
+      categ_id: ['', Validators.required],
     });
   }
-  editTodo() {
+  editExpense() {
     this.expenseService
       .updateExpense({
         ...this.curExpense,
         ...this.form.value,
         date: formatDate(this.form.value.expense_date, 'yyyy-MM-dd', 'en-US'),
+        category: {
+          categ_id: this.form.value.categ_id,
+          name: this.categories.find((c) => c._id === this.form.value.categ_id)
+            ?.name,
+        },
       })
       .subscribe((response) => {
         this.router.navigate(['/', 'expense']);

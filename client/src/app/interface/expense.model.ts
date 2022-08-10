@@ -5,4 +5,8 @@ export default interface Expense {
   description: string;
   total: number;
   date: string;
+  category?: {
+    categ_id: string;
+    name: string;
+  };
 }
